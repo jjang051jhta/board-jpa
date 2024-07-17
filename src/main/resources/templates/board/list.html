@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/head :: head02('SIGNIN','alien02.png')}"></head>
+<header th:replace="~{fragment/header}"></header>
+<body>
+<div class="container">
+    <h1 class="mb-5 mt-5">LIST</h1>
+    <h1 class="mb-5 mt-5" th:text="${session.userName}">장성호</h1>
+    <table class="table table-striped">
+        <colgroup>
+            <col style="width:80px">
+            <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">NO</th>
+                <th scope="col">TITLE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="boardItem,boardItemStat : ${boardList}">
+                <th scope="row" th:text="${boardItemStat.count}">1</th>
+                <td>
+<!--                    http://localhost:8081/board/1-->
+                    <a href="" th:href="@{/board/{id}(id=${boardItem.id})}"  th:text="${boardItem.title}">Mark</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="mt-5"><a href="" th:href="@{/board/write}" class="btn btn-primary">WRITE</a></div>
+</div>
+<script th:replace="~{fragment/footer}"></script>
+</body>
+</html>

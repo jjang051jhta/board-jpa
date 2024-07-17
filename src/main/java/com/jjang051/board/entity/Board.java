@@ -15,6 +15,7 @@ public class Board {
 
 
     @ManyToOne
+    @JoinColumn(name = "writerId",referencedColumnName = "userId")
     private Member writer;
 
     private LocalDateTime regDate;
