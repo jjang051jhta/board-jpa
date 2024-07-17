@@ -26,12 +26,15 @@ public class MemberController {
     public String signin() {
         return "member/signin";
     }
-
     @PostMapping("/signin")
     public String signinProcess(@ModelAttribute MemberDto memberDto) {
         Member savedMember = memberService.siginIn(memberDto);
         MemberDto convertedMemberDto = Member.fromEntity(savedMember);
         log.info("savedMember==={}",convertedMemberDto.toString());
         return "redirect:/member/login";
+    }
+    @GetMapping("/login")
+    public String login() {
+        return "member/login";
     }
 }
