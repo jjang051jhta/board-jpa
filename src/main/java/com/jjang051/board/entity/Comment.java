@@ -1,6 +1,7 @@
 package com.jjang051.board.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
@@ -18,4 +19,11 @@ public class Comment {
     @ManyToOne
     private Member member;
 
+    @Builder
+    public Comment(String content, LocalDateTime regDate, Board board, Member member) {
+        this.content = content;
+        this.regDate = regDate;
+        this.board = board;
+        this.member = member;
+    }
 }

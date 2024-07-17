@@ -26,8 +26,8 @@
                     <a href="" th:href="@{/board/view/{id}(id=${boardItem.id})}"
                        th:text="${boardItem.title}">Mark</a>
                 </td>
-                <td th:text="${boardItem.writer}"></td>
-                <td th:text="${boardItem.regDate}"></td>
+                <td th:text="${boardItem?.writer?.userName}"></td>
+                <td th:text="${#temporals.format(boardItem?.regDate,'YYYY-MM-dd HH:mm')}"></td>
             </tr>
         </tbody>
     </table>

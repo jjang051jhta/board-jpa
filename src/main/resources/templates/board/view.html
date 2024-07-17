@@ -26,12 +26,17 @@
         </tr>
         </tbody>
     </table>
+    <form class="mt-5" action="" method="post" th:method="post"
+          th:action="@{|/comment/insert/${board.id}|}">
+        <textarea class="form-control mb-3" rows="5" name="content"></textarea>
+        <button class="btn btn-primary">답변등록</button>
+    </form>
 
     <div class="mt-5">
         <a href="" th:href="@{/board/write}" class="btn btn-primary">WRITE</a>
         <a href="" th:href="@{/board/list}" class="btn btn-primary">LIST</a>
-        <a href="" th:href="@{/board/delete/{id}(id=${boardDto.id})}" class="btn btn-danger">DELETE-PATH</a>
-        <a href="" th:href="@{/board/delete-param(id=${boardDto.id})}" class="btn btn-danger">DELETE-PARAM</a>
+        <a href="" th:href="@{/board/delete/{id}(id=${board.id})}" class="btn btn-danger">DELETE-PATH</a>
+        <a href="" th:href="@{/board/delete-param(id=${board.id})}" class="btn btn-danger">DELETE-PARAM</a>
     </div>
 </div>
 <script th:replace="~{fragment/footer}"></script>
