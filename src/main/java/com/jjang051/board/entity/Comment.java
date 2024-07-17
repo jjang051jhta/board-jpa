@@ -1,11 +1,16 @@
 package com.jjang051.board.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -17,6 +22,7 @@ public class Comment {
     private Board board;
 
     @ManyToOne
+    @JoinColumn(name = "writerId",referencedColumnName = "userId")
     private Member member;
 
     @Builder

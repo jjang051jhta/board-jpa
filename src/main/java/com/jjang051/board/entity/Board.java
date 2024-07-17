@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -21,6 +22,10 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "writerId",referencedColumnName = "userId")
     private Member writer;
+
+    @OneToMany(mappedBy = "board")
+    private List<Comment> comments;
+
 
     private LocalDateTime regDate;
 

@@ -26,6 +26,13 @@
         </tr>
         </tbody>
     </table>
+    <ul>
+        <li th:each="comment : ${board.comments}">
+            <span th:text="${comment.content}"></span>
+            <span th:text="${comment.regDate}"></span>
+            <span th:text="${comment.member.userName}"></span>
+        </li>
+    </ul>
     <form class="mt-5" action="" method="post" th:method="post"
           th:action="@{|/comment/insert/${board.id}|}">
         <textarea class="form-control mb-3" rows="5" name="content"></textarea>
