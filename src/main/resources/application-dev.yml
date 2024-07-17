@@ -1,0 +1,22 @@
+server:
+  port: 8084
+
+spring:
+#  datasource:
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
+#    url: jdbc:oracle:thin:@localhost:1521:xe
+#    username: jjang052
+#    password: 1234
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:~/test04;mode=oracle
+
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+
+
+

@@ -1,0 +1,39 @@
+server:
+  servlet:
+    session:
+      timeout: 1800
+      #tracking-modes: cookie
+
+
+spring:
+  application:
+    name: board-jpa
+  profiles:
+    active: dev
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  #jpa는 범용 기술  spring jpa는 편리하게 사용하라고 구현되어 있음 proxy 패턴을 이용해서 다 구현해 놓고 있음
+
+  jpa:
+    properties:
+      hibernate:
+        #show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update   # 테이블 만들어줌...
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+
+file:
+  path: C:/upload/
+
+logging:
+  level:
+    org.hibernate.sql: debug
