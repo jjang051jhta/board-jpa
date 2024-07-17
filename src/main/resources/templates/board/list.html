@@ -5,7 +5,7 @@
 <body>
 <div class="container">
     <h1 class="mb-5 mt-5">LIST</h1>
-    <h1 class="mb-5 mt-5" th:text="${session.userName}">장성호</h1>
+<!--    <h1 class="mb-5 mt-5" th:text="${session.userName}">장성호</h1>-->
     <table class="table table-striped">
         <colgroup>
             <col style="width:80px">
@@ -15,15 +15,19 @@
             <tr>
                 <th scope="col">NO</th>
                 <th scope="col">TITLE</th>
+                <th scope="col">WRITER</th>
+                <th scope="col">DATE</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="boardItem,boardItemStat : ${boardList}">
+            <tr th:each="boardItem : ${boardList}">
                 <th scope="row" th:text="${boardItemStat.count}">1</th>
                 <td>
-<!--                    http://localhost:8081/board/1-->
-                    <a href="" th:href="@{/board/{id}(id=${boardItem.id})}"  th:text="${boardItem.title}">Mark</a>
+                    <a href="" th:href="@{/board/view/{id}(id=${boardItem.id})}"
+                       th:text="${boardItem.title}">Mark</a>
                 </td>
+                <td th:text="${boardItem.writer}"></td>
+                <td th:text="${boardItem.regDate}"></td>
             </tr>
         </tbody>
     </table>

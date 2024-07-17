@@ -48,4 +48,6 @@ public class Member {
                 .password(member.getPassword())
                 .build();
     }
+
+
 }

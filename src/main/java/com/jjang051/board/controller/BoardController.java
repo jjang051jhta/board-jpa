@@ -1,18 +1,27 @@
 package com.jjang051.board.controller;
 
+import com.jjang051.board.dto.BoardDto;
 import com.jjang051.board.dto.CustomUserDetails;
 import com.jjang051.board.entity.Board;
 import com.jjang051.board.repository.BoardRepository;
+import com.jjang051.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/board")
 public class BoardController {
-    private final BoardRepository boardRepository;
+    private final BoardService boardService;
     @GetMapping("/write")
     public String insert() {
         return "board/write";
@@ -20,17 +29,31 @@ public class BoardController {
 
 
     @PostMapping("/write")
-    public String insert(@RequestParam String title, @RequestParam String content,
+    public String insert(@ModelAttribute BoardDto boardDto,
                          @AuthenticationPrincipal CustomUserDetails customUserDetails)    {
-        Board saveBoard = Board.builder()
-                .title(title)
-                .content(content)
-                .writer(customUserDetails.getLoggedMember())
-                .build();
-        boardRepository.save(saveBoard);
-        return "redirect:/board/write";
+        boardDto.setRegDate(LocalDateTime.now());
+        boardDto.setWriter(customUserDetails.getLoggedMember());
+        boardService.insertBoard(boardDto);
+        return "redirect:/board/list";
     }
 
+    @GetMapping("/list")
+    public String list(Model model) {
+        List<Board> boardList = boardService.getBoardList();
+        model.addAttribute("boardList",boardList);
+        //service 파트로 옮기기
+        // board를 dto변경
+        // 화면 출력
+        return "board/list";
+    }
+
+    @GetMapping("/view/{id}")
+    public String list(Model model, @PathVariable("id") Long id) {
+        Board board = boardService.getBoard(id);
+        model.addAttribute("board",board);
+        //view에다가 렌더링 하시고 답글 넣기 해보기
+        return "board/view";
+    }
 
 
 }
