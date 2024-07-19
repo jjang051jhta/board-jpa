@@ -37,10 +37,15 @@
                 th:data-url="@{|/board/delete/${board.id}|}">삭제</button>
     </div>
     <ul>
-        <li th:each="comment : ${board.comments}">
+        <li th:each="comment : ${board.comments}" class="mt-2">
             <span th:text="${comment.content}"></span>
             <span th:text="${comment.regDate}"></span>
             <span th:text="${comment.member.userName}"></span>
+            <button class="btn btn-danger btn-sm mx-2 btn-comment-delete"
+                th:if="${comment.member.userId==
+                        #authentication.principal.loggedMember.userId}"
+                th:data-url="@{|/comment/delete/${comment.id}?boardId=${board.id}|}"
+            >DEL</button>
         </li>
     </ul>
     <form class="mt-5" action="" method="post" th:method="post"
@@ -65,6 +70,15 @@
           //location.href=[[|/board/delete/${board.id}|]];  //delete(board)
           //location.href=$(this).data("url");
             location.href=[[|/board/deleteid/${board.id}|]];
+        };
+    });
+    $(".btn-comment-delete").on("click",function(){
+        if(confirm("삭제하시겠습니까?")){
+            //삭제하면 된다.
+            //location.href=[[|/board/delete/${board.id}|]];  //delete(board)
+            //location.href=$(this).data("url");
+            location.href=$(this).data("url");
+            ///comment/delete/200?boardId=100
         };
     })
 </script>

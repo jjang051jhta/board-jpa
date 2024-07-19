@@ -7,10 +7,7 @@ import com.jjang051.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -27,5 +24,13 @@ public class CommentController {
         commentService.insert(content,board,customUserDetails.getLoggedMember());
         return "redirect:/board/view/"+id;
     }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id,@RequestParam Long boardId
+    ) {
+        commentService.delete(id);
+        return "redirect:/board/view/"+boardId;  //boardId
+    }
+
 
 }

@@ -86,14 +86,12 @@ public class BoardController {
     @PostMapping("/modify/{id}")
     public String modifyProcess(@PathVariable("id") Long id,
                                 @ModelAttribute BoardDto boardDto,
-                                @AuthenticationPrincipal CustomUserDetails customUserDetails
+                                @AuthenticationPrincipal
+                                    CustomUserDetails customUserDetails
                                 ) {
-        //Board findBoard = boardService.getBoard(id);
-        //findBoard.setTitle(board.getTitle());
-        //findBoard.setContent(board.getContent());
-
         //같으면 업데이트를 한다.
         //같은 객체를 내용만 바꿔서 save 하면   dirty checking
+        log.info("===={}",boardDto.getId());
         boardDto.setRegDate(LocalDateTime.now());
         boardDto.setWriter(customUserDetails.getLoggedMember());
         boardService.modify(boardDto,id);

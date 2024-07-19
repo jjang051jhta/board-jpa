@@ -48,13 +48,14 @@ public class BoardService {
     }
 
     public void modify(BoardDto findBoardDto, Long id) {
-        //findBoardDto.setId(999l);
+        //  findBoardDto.setId(999l);
         //  @Id 값을 가지고 같은지 다른지 판단한다. 이게 null이면 insert
         //  값은거면 save했을때  update를 날린다.
-        log.info("findBoardDto==={}",findBoardDto.getId());
-        log.info("BoardDto.toEntity(findBoardDto)==={}",BoardDto.toEntity(findBoardDto));
-        //findBoardDto.setRegDate(LocalDateTime.now());
-        //findBoardDto.setWriter(customUserDetails.getLoggedMember());
-        boardRepository.save(BoardDto.toEntity(findBoardDto));
+        //  findBoardDto.setId(93203902l);
+        //  save()  둘다 한다   insert   update를 한다.
+        //  이때 같은 객체를 판단하는 기준은 @Id를 가지고 한다.
+        //  null이면 새로운 객체 즉 insert를하고
+        //  니면 update
+      boardRepository.save(BoardDto.toEntity(findBoardDto));
     }
 }
