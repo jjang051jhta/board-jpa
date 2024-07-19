@@ -14,14 +14,14 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     @Query("select b from Board b left join fetch b.comments")
     List<Comment> findByBoardFetch();
 
-    @Query(value=
-            "select b from Board b where b.title like % :keyword % "
-            )
-    List<Comment> findBySubject(@Param("keyword") String keyword);
-
-    @Query(value=
-            "select * from Board b where b.title like % :keyword % ",
-            nativeQuery = true
-    )
-    List<Comment> findBySubject02(@Param("keyword") String keyword);
+//    @Query(value=
+//            "select b from Board b where b.title like % :keyword % "
+//            )
+//    List<Comment> findBySubject(@Param("keyword") String keyword);
+//
+//    @Query(value=
+//            "select * from Board b where b.title like % :keyword % ",
+//            nativeQuery = true
+//    )
+//    List<Comment> findBySubject02(@Param("keyword") String keyword);
 }

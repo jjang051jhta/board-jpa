@@ -4,17 +4,31 @@ import com.jjang051.board.entity.Member;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 @Getter
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, OAuth2User {
 
     private Member loggedMember;
 
+    private Map<String, Object> attributes;
+
     public CustomUserDetails(Member loggedMember) {
         this.loggedMember = loggedMember;
+    }
+
+    public CustomUserDetails(Member loggedMember, Map<String, Object> attributes) {
+        this.loggedMember = loggedMember;
+        this.attributes = attributes;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
     }
 
     @Override
@@ -57,5 +71,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return (String) attributes.get("name");
     }
 }

@@ -1,5 +1,7 @@
 package com.jjang051.board.config;
 
+import com.jjang051.board.service.OAuth2DetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +13,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final OAuth2DetailsService oAuth2DetailsService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -54,6 +59,13 @@ public class SecurityConfig {
                         new AntPathRequestMatcher("/member/logout"))
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
+        );
+        httpSecurity.oauth2Login((auth)->auth
+                .loginPage("/member/login")
+                .defaultSuccessUrl("/board/list")
+                .userInfoEndpoint(userInfo->
+                        userInfo.userService(oAuth2DetailsService)
+                )
         );
         httpSecurity.csrf((auth)->auth.disable());
         //필터 설정을 여기다가 하면 된다.
