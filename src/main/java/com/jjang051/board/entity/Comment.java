@@ -18,7 +18,7 @@ public class Comment {
     private String content;
     private LocalDateTime regDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
     @ManyToOne

@@ -56,4 +56,11 @@ public class BoardController {
     }
 
 
+    @GetMapping("/delete/{id}")
+    @ResponseBody
+    public String delete(@PathVariable("id") Long id) {
+        //delete 를 하면 된다.
+        log.info("id==={}",id);
+        return id+"==="+id;
+    }
 }
