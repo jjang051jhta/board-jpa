@@ -1,14 +1,17 @@
 package com.jjang051.board.service;
 
 import com.jjang051.board.dto.BoardDto;
+import com.jjang051.board.dto.CustomUserDetails;
 import com.jjang051.board.entity.Board;
 import com.jjang051.board.entity.Member;
 import com.jjang051.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +47,14 @@ public class BoardService {
         boardRepository.deleteById(id);
     }
 
-    public void modify(Board findBoard) {
-        boardRepository.save(findBoard);
+    public void modify(BoardDto findBoardDto, Long id) {
+        //findBoardDto.setId(999l);
+        //  @Id 값을 가지고 같은지 다른지 판단한다. 이게 null이면 insert
+        //  값은거면 save했을때  update를 날린다.
+        log.info("findBoardDto==={}",findBoardDto.getId());
+        log.info("BoardDto.toEntity(findBoardDto)==={}",BoardDto.toEntity(findBoardDto));
+        //findBoardDto.setRegDate(LocalDateTime.now());
+        //findBoardDto.setWriter(customUserDetails.getLoggedMember());
+        boardRepository.save(BoardDto.toEntity(findBoardDto));
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
+//@Setter
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
