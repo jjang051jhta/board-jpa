@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.tymeleaf.org">
 
 <head th:fragment="head01">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
 
     <meta charset="UTF-8">
     <title>Title</title>
@@ -19,8 +19,8 @@
 </head>
 <head th:fragment="head02(title, favicon)">
     <meta charset="UTF-8">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="icon" type="image/x-icon" href="/images/common/alien.png"
           th:href="@{|/images/common/${favicon}|}"
     >

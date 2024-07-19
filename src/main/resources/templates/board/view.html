@@ -72,6 +72,7 @@
             location.href=[[|/board/deleteid/${board.id}|]];
         };
     });
+    /*
     $(".btn-comment-delete").on("click",function(){
         if(confirm("삭제하시겠습니까?")){
             //삭제하면 된다.
@@ -80,6 +81,33 @@
             location.href=$(this).data("url");
             ///comment/delete/200?boardId=100
         };
+    })
+     */
+    $(".btn-comment-delete").on("click",function(){
+        const deleteURL = $(this).data("url");
+        const _parent = $(this).parent().remove();
+        console.log(deleteURL);
+        $.ajax({
+            method:"delete",
+            url:deleteURL,
+            success:function(res) {
+                console.log(res);
+                if(res.isDelete==="ok") {
+                    //location.reload();
+                    _parent.remove();
+
+                }
+            }
+        })
+        // if(confirm("삭제하시겠습니까?")){
+        //     $.ajax({
+        //         method:"delete",
+        //         url:deleteURL,
+        //         success:function(res) {
+        //             console.log(res);
+        //         }
+        //     })
+        // };
     })
 </script>
 </body>

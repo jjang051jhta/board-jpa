@@ -55,6 +55,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
         );
+        httpSecurity.csrf((auth)->auth.disable());
         //필터 설정을 여기다가 하면 된다.
         return httpSecurity.build();
     }

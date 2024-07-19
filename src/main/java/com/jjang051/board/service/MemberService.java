@@ -30,4 +30,8 @@ public class MemberService {
         //Member에 fromEntity dto
         return memberRepository.save(signInMember);
     }
+    private void getMember() {
+        memberRepository.findByUserId("jjang051");
+
+    }
 }
