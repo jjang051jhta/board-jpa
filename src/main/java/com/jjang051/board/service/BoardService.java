@@ -15,7 +15,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional
 public class BoardService {
     private final BoardRepository boardRepository;
     public List<Board> getBoardList() {
@@ -33,5 +32,19 @@ public class BoardService {
             return optionalBoard.get();
         }
         throw new RuntimeException("해당하는 글이 삭제되었거나 없습니다.");
+    }
+
+    public void delete(Long id) {
+        Board board = this.getBoard(id);
+        boardRepository.delete(board);
+    }
+
+    public void deleteId(Long id) {
+        //Board board = this.getBoard(id);
+        boardRepository.deleteById(id);
+    }
+
+    public void modify(Board findBoard) {
+        boardRepository.save(findBoard);
     }
 }
