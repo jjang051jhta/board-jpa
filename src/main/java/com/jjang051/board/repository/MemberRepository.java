@@ -1,6 +1,7 @@
 package com.jjang051.board.repository;
 
 import com.jjang051.board.entity.Board;
+import com.jjang051.board.entity.Comment;
 import com.jjang051.board.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
            "where b.writer.userId = :userId"
     )
     List<Board> findAllBoards(@Param("userId") String userId);
+
+    @Query("select c from Comment c " +
+            "join fetch c.writer " +
+            "where c.writer.userId = :userId")
+    List<Comment> findAllComments(String userId);
 }

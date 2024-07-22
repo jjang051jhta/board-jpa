@@ -42,9 +42,11 @@
     <div class="mt-5">
         <h2>내가 쓴 코멘트</h2>
         <ul>
-            <li>여기다가 내가 쓴 글 2024-07-22 11:20</li>
-            <li>여기다가 내가 쓴 글 2024-07-22 11:20</li>
-            <li>여기다가 내가 쓴 글 2024-07-22 11:20</li>
+            <li th:each="item:${comments}">
+                <span th:text="${item.content}"></span>
+                <span th:text="${item.writer.userName}"></span>
+                <span th:text="${item.regDate}"></span>
+            </li>
         </ul>
     </div>
 

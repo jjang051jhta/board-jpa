@@ -2,6 +2,7 @@ package com.jjang051.board.service;
 
 import com.jjang051.board.dto.MemberDto;
 import com.jjang051.board.entity.Board;
+import com.jjang051.board.entity.Comment;
 import com.jjang051.board.entity.Member;
 import com.jjang051.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +40,9 @@ public class MemberService {
 
     public List<Board> findAllBoards(String userId) {
         return memberRepository.findAllBoards(userId);
+    }
+
+    public List<Comment> findAllComments(String userId) {
+        return memberRepository.findAllComments(userId);
     }
 }

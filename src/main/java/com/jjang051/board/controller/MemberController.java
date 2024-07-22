@@ -3,6 +3,7 @@ package com.jjang051.board.controller;
 import com.jjang051.board.dto.CustomUserDetails;
 import com.jjang051.board.dto.MemberDto;
 import com.jjang051.board.entity.Board;
+import com.jjang051.board.entity.Comment;
 import com.jjang051.board.entity.Member;
 import com.jjang051.board.repository.MemberRepository;
 import com.jjang051.board.service.MemberService;
@@ -47,7 +48,10 @@ public class MemberController {
     public String info(Model model,
                        @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         //jjang051
-        List<Board> boards = memberService.findAllBoards(customUserDetails.getLoggedMember().getUserId());
+        List<Board> boards =
+                memberService.findAllBoards(customUserDetails.getLoggedMember().getUserId());
+        List<Comment> comments =
+                memberService.findAllComments(customUserDetails.getLoggedMember().getUserId());
         model.addAttribute("infoMember",customUserDetails); //기본 정보들
         model.addAttribute("boards",boards);
         model.addAttribute("comments",comments);
