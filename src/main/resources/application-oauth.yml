@@ -4,22 +4,32 @@ spring :
       client:
         registration:
           google:
-            client-id:
-            client-secret:
+            client-id: 86042780508-0kng6dpsuj52gpaa9867v16j6nbhu3je.apps.googleusercontent.com
+            client-secret: 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
             scope:
               - profile
               - email
 
 
+          github:
+            client-id: Iv23liuCbvXGZAT1fOj0
+            client-secret: 81f672e38e91660dc4b1a30f9a40689aac1c9719
+#            scope:
+#              - profile
+#              - email
+
+
           kakao:
-            client-id:
-            client-secret:
+            #앱키 중에 rest 키
+            client-id: a4322cd945d88b2a3d29399c28fe740f
+            #보안 secret key
+            client-secret: icxJLWyn8cSmxuaQHGczLeqnXDfkdmi4
             scope:
               - profile_nickname
               - profile_image
             client-name: Kakao
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8084/login/oauth2/kakao
+            redirect-uri: http://localhost:8084/login/oauth2/code/kakao
             client-authentication-method: client_secret_post
 
         # 글로벌 업체들이 아닌 경우 kakao naver같은 경우
