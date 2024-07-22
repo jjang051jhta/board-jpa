@@ -3,10 +3,7 @@ package com.jjang051.board.service;
 import com.jjang051.board.dto.CustomUserDetails;
 import com.jjang051.board.entity.Member;
 import com.jjang051.board.repository.MemberRepository;
-import com.jjang051.board.social.GithubUserInfo;
-import com.jjang051.board.social.GoogleUserInfo;
-import com.jjang051.board.social.KakaoUserInfo;
-import com.jjang051.board.social.SocialuserInfo;
+import com.jjang051.board.social.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,6 +47,8 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
             socialuserInfo = new KakaoUserInfo(oath2UserInfo);
         } else if(provider.equals("github")) {
             socialuserInfo = new GithubUserInfo(oath2UserInfo);
+        }else if(provider.equals("naver")) {
+            socialuserInfo = new NaverUserInfo(oath2UserInfo);
         }
         Member returnMember = null;
         Optional<Member> findMember =
