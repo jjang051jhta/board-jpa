@@ -21,7 +21,7 @@ public class Board {
 
     //fetch전략  ManyToOne은 default lazy
 
-    @ManyToOne(fetch = FetchType.LAZY)  //
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writerId",referencedColumnName = "userId")
     private Member writer;
 

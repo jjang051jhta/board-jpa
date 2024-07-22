@@ -30,8 +30,6 @@ spring:
       ddl-auto: update   # 테이블 만들어줌...
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
-
   data:
     web:
       pageable:

@@ -8,25 +8,46 @@
     <h1 class="mt-5 mb-5">INFO</h1>
     <table class="table table-bordered">
         <tbody>
-            <tr>
-                <th>ID</th>
-                <td>jjang051</td>
-            </tr>
-            <tr>
-                <th>USER NAME</th>
-                <td>장성호</td>
-            </tr>
-            <tr>
-                <th>EMAIL</th>
-                <td>ㄹㅇㄴㄹㅇㄴ</td>
-            </tr>
-            <tr>
-                <th>REGDATE</th>
-                <td>12:10</td>
-            </tr>
+        <tr>
+            <th>ID</th>
+            <td th:text="${infoMember.loggedMember.userId}">jjang051</td>
+        </tr>
+        <tr>
+            <th>USER NAME</th>
+            <td th:text="${infoMember.loggedMember.userName}">장성호</td>
+        </tr>
+        <tr>
+            <th>EMAIL</th>
+            <td th:text="${infoMember.loggedMember.email}">ㄹㅇㄴㄹㅇㄴ</td>
+        </tr>
+        <tr>
+            <th>REGDATE</th>
+            <td  th:text="${#temporals.format(infoMember.loggedMember.regDate,'YYYY-MM-dd HH:mm')}">12:10</td>
+        </tr>
         </tbody>
-
     </table>
+    <div class="mt-5">
+        <h2>내가 쓴 게시글</h2>
+        <ul>
+            <li th:each="item:${boards}">
+                <span th:text="${item.title}"></span>
+                <span th:text="${item.writer.userName}"></span>
+                <span th:text="${item.regDate}"></span>
+            </li>
+<!--            <li>여기다가 내가 쓴 글 2024-07-22 11:20</li>-->
+<!--            <li>여기다가 내가 쓴 글 2024-07-22 11:20</li>-->
+        </ul>
+    </div>
+
+    <div class="mt-5">
+        <h2>내가 쓴 코멘트</h2>
+        <ul>
+            <li>여기다가 내가 쓴 글 2024-07-22 11:20</li>
+            <li>여기다가 내가 쓴 글 2024-07-22 11:20</li>
+            <li>여기다가 내가 쓴 글 2024-07-22 11:20</li>
+        </ul>
+    </div>
+
     <div class="mt-5">
         <a href="" th:href="@{/member/delete}" class="btn btn-danger">회원탈퇴</a>
         <a href="" th:href="@{/member/modify}" class="btn btn-danger mx-1">정보수정</a>

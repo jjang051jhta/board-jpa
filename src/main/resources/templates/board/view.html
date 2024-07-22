@@ -40,9 +40,9 @@
         <li th:each="comment : ${board.comments}" class="mt-2">
             <span th:text="${comment.content}"></span>
             <span th:text="${comment.regDate}"></span>
-            <span th:text="${comment.member.userName}"></span>
+            <span th:text="${comment.writer.userName}"></span>
             <button class="btn btn-danger btn-sm mx-2 btn-comment-delete"
-                th:if="${comment.member.userId==
+                th:if="${comment.writer.userId==
                         #authentication.principal.loggedMember.userId}"
                 th:data-url="@{|/comment/delete/${comment.id}?boardId=${board.id}|}"
             >DEL</button>

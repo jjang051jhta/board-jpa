@@ -19,7 +19,7 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     @Query("select b from Board b " +
             "left join fetch b.writer " +
             "left join fetch b.comments c " +
-            "left join fetch c.member")
+            "left join fetch c.writer")
     List<Board> findAllFetchBoard();
     //n + 1 문제 풀때 join fetch
 

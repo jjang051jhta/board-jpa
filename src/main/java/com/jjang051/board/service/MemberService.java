@@ -1,6 +1,7 @@
 package com.jjang051.board.service;
 
 import com.jjang051.board.dto.MemberDto;
+import com.jjang051.board.entity.Board;
 import com.jjang051.board.entity.Member;
 import com.jjang051.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +35,9 @@ public class MemberService {
     private void getMember() {
         memberRepository.findByUserId("jjang051");
 
+    }
+
+    public List<Board> findAllBoards(String userId) {
+        return memberRepository.findAllBoards(userId);
     }
 }

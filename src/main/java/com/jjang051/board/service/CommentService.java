@@ -23,7 +23,7 @@ public class CommentService {
                                 .content(content)
                                 .regDate(LocalDateTime.now())
                                 .board(board)
-                                .member(member)
+                                .writer(member)
                         .build();
         commentRepository.save(comment);
 
