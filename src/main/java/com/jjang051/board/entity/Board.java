@@ -21,12 +21,14 @@ public class Board {
 
     //fetch전략  ManyToOne은 default lazy
 
-    @ManyToOne(fetch = FetchType.LAZY)  //늦게 가져오는 전력  sql
+    @ManyToOne(fetch = FetchType.LAZY)  //
     @JoinColumn(name = "writerId",referencedColumnName = "userId")
     private Member writer;
 
     // comments 가 없으면 상관이 없는데 참조를 하고 있으면 지워지지 않는다.
-    @OneToMany(mappedBy = "board",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "board",
+              fetch = FetchType.LAZY,
+              cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
 

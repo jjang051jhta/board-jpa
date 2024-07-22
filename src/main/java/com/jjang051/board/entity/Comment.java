@@ -21,15 +21,15 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writerId",referencedColumnName = "userId")
-    private Member member;
+    private Member writer;
 
     @Builder
-    public Comment(String content, LocalDateTime regDate, Board board, Member member) {
+    public Comment(String content, LocalDateTime regDate, Board board, Member writer) {
         this.content = content;
         this.regDate = regDate;
         this.board = board;
-        this.member = member;
+        this.writer = writer;
     }
 }

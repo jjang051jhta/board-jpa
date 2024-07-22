@@ -37,4 +37,11 @@ public class MemberController {
     public String login() {
         return "member/login";
     }
+
+    @GetMapping("/info")
+    public String info() {
+        return "member/info";
+    }
+
+
 }

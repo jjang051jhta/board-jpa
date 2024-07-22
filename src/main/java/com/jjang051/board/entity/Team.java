@@ -10,10 +10,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Team {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "team_id")
     private Long id;
     private String name;
@@ -21,4 +20,7 @@ public class Team {
     @OneToMany
     List<User> users = new ArrayList<>();
 
+    public Team(String name) {
+        this.name = name;
+    }
 }

@@ -3,6 +3,7 @@ package com.jjang051.board.repository;
 
 import com.jjang051.board.entity.Board;
 import com.jjang051.board.entity.Comment;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,8 +15,13 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
 
 
     //"select * from board"
-    @Query("select b from Board b join fetch b.writer")
+    //@Query("select b from Board b left join fetch b.writer m left join fetch b.comments c left join fetch c.member cm")
+    @Query("select b from Board b " +
+            "left join fetch b.writer " +
+            "left join fetch b.comments c " +
+            "left join fetch c.member")
     List<Board> findAllFetchBoard();
+    //n + 1 문제 풀때 join fetch
 
 //    @Query(value=
 //            "select b from Board b where b.title like % :keyword % "

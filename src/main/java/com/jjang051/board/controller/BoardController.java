@@ -40,6 +40,7 @@ public class BoardController {
     @GetMapping("/list")
     public String list(Model model) {
         List<Board> boardList = boardService.getBoardList();
+        //dto로 바꿔서 나가야함... entity를 직접 내보내는건 좋지 않다.  dto
         model.addAttribute("boardList",boardList);
         //service 파트로 옮기기
         // board를 dto변경

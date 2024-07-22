@@ -23,8 +23,11 @@ public class Member {
 
     private String password;
 
-    @OneToMany(mappedBy = "writer")
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
     private List<Board> boards;
+
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
     private LocalDateTime regDate;
 
