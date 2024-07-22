@@ -16,7 +16,7 @@ public class GoogleUserInfo implements SocialuserInfo {
 
     @Override
     public String getName() {
-        return (String)attribute.get("name");
+        return (String) attribute.get("name");
     }
 
     @Override

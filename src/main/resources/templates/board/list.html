@@ -24,7 +24,9 @@
                 <th scope="row" th:text="${boardItemStat.count}">1</th>
                 <td>
                     <a href="" th:href="@{/board/view/{id}(id=${boardItem.id})}"
-                       th:text="${boardItem.title}">Mark</a>
+                       th:text="${boardItem.title}">
+                    </a>
+                    <span th:text="${boardItem.comments.size()}"></span>
                 </td>
                 <td th:text="${boardItem?.writer?.userName}"></td>
                 <td th:text="${#temporals.format(boardItem?.regDate,'YYYY-MM-dd HH:mm')}"></td>

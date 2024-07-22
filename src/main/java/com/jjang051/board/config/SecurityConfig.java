@@ -18,10 +18,6 @@ public class SecurityConfig {
 
     private final OAuth2DetailsService oAuth2DetailsService;
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -62,7 +58,7 @@ public class SecurityConfig {
         );
         httpSecurity.oauth2Login((auth)->auth
                 .loginPage("/member/login")
-                .defaultSuccessUrl("/board/list")
+                .defaultSuccessUrl("/board/list",true)
                 .userInfoEndpoint(userInfo->
                         userInfo.userService(oAuth2DetailsService)
                 )

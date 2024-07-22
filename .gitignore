@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+#github에 올라가지 않음
+application-oauth.yml

@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board,Long> {
 
-    @Query("select b from Board b left join fetch b.comments")
-    List<Comment> findByBoardFetch();
+    @Query("select b from Board b left join fetch b.writer m left join fetch b.comments c left join fetch c.member cm")
+    List<Board> findByBoardFetch();
 
 //    @Query(value=
 //            "select b from Board b where b.title like % :keyword % "
