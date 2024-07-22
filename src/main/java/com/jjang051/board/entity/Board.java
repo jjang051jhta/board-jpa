@@ -19,8 +19,9 @@ public class Board {
     private String title;
     private String content;
 
+    //fetch전략  ManyToOne은 default lazy
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)  //늦게 가져오는 전력  sql
     @JoinColumn(name = "writerId",referencedColumnName = "userId")
     private Member writer;
 

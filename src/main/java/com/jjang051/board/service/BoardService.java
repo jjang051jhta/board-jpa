@@ -21,8 +21,8 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
     public List<Board> getBoardList() {
-        //return boardRepository.findAll();
-        return boardRepository.findByBoardFetch();
+        return boardRepository.findAll();
+        //return boardRepository.findByBoardFetch();
     }
 
     public void insertBoard(BoardDto boardDto) {
