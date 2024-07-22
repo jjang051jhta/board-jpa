@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
         );
+        //회원로그인
         httpSecurity.oauth2Login((auth)->auth
                 .loginPage("/member/login")
                 .defaultSuccessUrl("/board/list",true)

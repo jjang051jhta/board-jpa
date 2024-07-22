@@ -7,7 +7,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class GoogleUserInfo implements SocialuserInfo {
 
-    private final Map<String ,Object> attribute;
+    private final Map<String ,Object> attribute;  // 맵
 
     @Override
     public String getEmail() {

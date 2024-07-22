@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -30,6 +31,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 
         log.info("구글로그인하면 여기로 들어온다.");
 
+
         OAuth2User oAuth2User = super.loadUser(userRequest);
         log.info("userRequest=={}",userRequest);
 
@@ -42,19 +44,28 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
         SocialuserInfo socialuserInfo = null;
         if(provider.equals("google")) {
             socialuserInfo = new GoogleUserInfo(oath2UserInfo);
-            log.info("socialuserInfo.getName()==={}",socialuserInfo.getName());
         }
-        Member member = Member.builder()
-                .userId(socialuserInfo.getProviderId())
-                .userName(socialuserInfo.getName())
-                .email(socialuserInfo.getEmail())
-                .regDate(LocalDateTime.now())
-                .password(
-                        bCryptPasswordEncoder.encode(UUID.randomUUID().toString())
-                )
-                .build();
-        memberRepository.save(member);
-        return new CustomUserDetails(null,oAuth2User.getAttributes());
+        Member returnMember = null;
+        Optional<Member> findMember =
+                memberRepository.findByUserId(socialuserInfo.getProviderId());
+        // returnMember null이면  처음 로그인 사용자
+        // returnMember null이 아니면   db에 이미 들어가 있는 사람 즉 처음 로그인이 아닌 사람.
+        if(findMember.isPresent()) {
+            returnMember = findMember.get();
+        } else {
+            //강제로 회원가입 시키겠다.
+            Member member = Member.builder()
+                    .userId(socialuserInfo.getProviderId())
+                    .userName(socialuserInfo.getName())
+                    .email(socialuserInfo.getEmail())
+                    .regDate(LocalDateTime.now())
+                    .password(
+                            bCryptPasswordEncoder.encode(UUID.randomUUID().toString())
+                    )
+                    .build();
+            memberRepository.save(member);
+        }
+        return new CustomUserDetails(returnMember,oAuth2User.getAttributes());
     }
 
 }

@@ -12,6 +12,9 @@ import java.util.Map;
 
 @Getter
 public class CustomUserDetails implements UserDetails, OAuth2User {
+    //UserDetails 직접회원가입한 멤버    6개의 기본 정보외 나머지 정보 찾아쓸때
+    //소셜로그인 통해서 가입한 유저
+
 
     private Member loggedMember;
 
@@ -75,6 +78,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getName() {
+        //소셜 로그인 통해서 들어온 user의 이름
         return (String) attributes.get("name");
     }
 }
