@@ -32,7 +32,8 @@ public class BoardService {
     }
 
     public Board getBoard(Long id) {
-        Optional<Board> optionalBoard = boardRepository.findById(id);
+        //Optional<Board> optionalBoard = boardRepository.findById(id);
+        Optional<Board> optionalBoard = boardRepository.findByFetchMemberAndCommentId(id);
         if(optionalBoard.isPresent()) {
             return optionalBoard.get();
         }

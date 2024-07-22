@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board,Long> {
 
@@ -21,6 +22,15 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
             "left join fetch b.comments c " +
             "left join fetch c.writer")
     List<Board> findAllFetchBoard();
+
+
+    @Query("select b from Board b " +
+            "left join fetch b.writer " +
+            "left join fetch b.comments c " +
+            "left join fetch c.writer "+
+            "where b.id = :id"
+    )
+    Optional<Board> findByFetchMemberAndCommentId(@Param("id") Long id);
     //n + 1 문제 풀때 join fetch
 
 //    @Query(value=
