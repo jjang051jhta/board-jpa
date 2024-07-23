@@ -33,6 +33,27 @@
             </tr>
         </tbody>
     </table>
+    <div class="mt-5 container">
+        <form action="" th:action="@{/board/search}" method="get">
+            <div class="row">
+                <div class="col-4">
+                    <select class="form-select">
+                        <option value="all">ALL</option>
+                        <option value=title">TITLE</option>
+                        <option value="content">CONTENT</option>
+                        <option value="writer">WRITER</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <input type="text" class="form-control" name="keyword">
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-primary">SEARCH</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
     <div class="mt-5"><a href="" th:href="@{/board/write}" class="btn btn-primary">WRITE</a></div>
 </div>
 <script th:replace="~{fragment/footer}"></script>
