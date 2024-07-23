@@ -101,15 +101,14 @@ public class BoardController {
         return "redirect:/board/modify/"+id;
     }
 
-//    @GetMapping("/dsl-list")
-//    @ResponseBody
-//    public List<Board> getQueryDslBoardList() {
-//        return boardService.getQueryDslBoardList();
-//    }
-//
-//    @GetMapping("/dsl-board")
-//    @ResponseBody
-//    public Board getQueryDslBoard() {
-//        return boardService.getQueryDslBoard();
-//    }
+    @GetMapping("/search")
+    public String search(@RequestParam String keyword,
+                         @RequestParam String category,
+                         Model model) {
+        log.info("keyword==={}",keyword);
+        List<Board> boardList =
+                boardService.getSearchResultList(keyword,category);
+        model.addAttribute("boardList",boardList);
+        return "board/list";
+    }
 }

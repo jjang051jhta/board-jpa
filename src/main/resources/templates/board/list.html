@@ -37,9 +37,9 @@
         <form action="" th:action="@{/board/search}" method="get">
             <div class="row">
                 <div class="col-4">
-                    <select class="form-select">
+                    <select class="form-select" name="category">
                         <option value="all">ALL</option>
-                        <option value=title">TITLE</option>
+                        <option value="title">TITLE</option>
                         <option value="content">CONTENT</option>
                         <option value="writer">WRITER</option>
                     </select>

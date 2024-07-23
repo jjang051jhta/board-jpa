@@ -4,12 +4,14 @@ import com.jjang051.board.dto.BoardDto;
 import com.jjang051.board.dto.CustomUserDetails;
 import com.jjang051.board.entity.*;
 import com.jjang051.board.repository.BoardRepository;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -99,5 +101,29 @@ public class BoardService {
         //  null이면 새로운 객체 즉 insert를하고
         //  니면 update
       boardRepository.save(BoardDto.toEntity(findBoardDto));
+    }
+
+    public List<Board> getSearchResultList(String keyword,String category) {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        if(category.equals("title")) {
+            booleanBuilder.or(board.title.contains(keyword));
+        }
+        if(category.equals("writer")) {
+            booleanBuilder.or(board.writer.userName.contains(keyword));
+        }
+        if(category.equals("content")) {
+            booleanBuilder.or(board.content.contains(keyword));
+        }
+        if(category.equals("all")) {
+            booleanBuilder
+                    .or(board.title.contains(keyword))
+                    .or(board.writer.userName.contains(keyword))
+                    .or(board.content.contains(keyword));
+        }
+        return queryFactory
+                .selectFrom(board)
+                .where(booleanBuilder)
+                .fetch();
+
     }
 }
