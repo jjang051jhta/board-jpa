@@ -2,6 +2,7 @@ package com.jjang051.board.dto;
 
 import com.jjang051.board.entity.Member;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -16,7 +17,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     //소셜로그인 통해서 가입한 유저
 
 
-    private Member loggedMember;
+    private final Member loggedMember;
 
     private Map<String, Object> attributes;
 

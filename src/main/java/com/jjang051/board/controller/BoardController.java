@@ -39,7 +39,8 @@ public class BoardController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Board> boardList = boardService.getBoardList();
+        //List<Board> boardList = boardService.getBoardList();
+        List<Board> boardList = boardService.getQueryDslList();
         //dto로 바꿔서 나가야함... entity를 직접 내보내는건 좋지 않다.  dto
         model.addAttribute("boardList",boardList);
         //service 파트로 옮기기
@@ -50,7 +51,8 @@ public class BoardController {
 
     @GetMapping("/view/{id}")
     public String list(Model model, @PathVariable("id") Long id) {
-        Board board = boardService.getBoard(id);
+        //Board board = boardService.getBoard(id);
+        Board board = boardService.getQuerydslBoard(id);
         model.addAttribute("board",board);
         //view에다가 렌더링 하시고 답글 넣기 해보기
         return "board/view";
@@ -98,4 +100,16 @@ public class BoardController {
         boardService.modify(boardDto,id);
         return "redirect:/board/modify/"+id;
     }
+
+//    @GetMapping("/dsl-list")
+//    @ResponseBody
+//    public List<Board> getQueryDslBoardList() {
+//        return boardService.getQueryDslBoardList();
+//    }
+//
+//    @GetMapping("/dsl-board")
+//    @ResponseBody
+//    public Board getQueryDslBoard() {
+//        return boardService.getQueryDslBoard();
+//    }
 }

@@ -2,9 +2,9 @@ package com.jjang051.board.service;
 
 import com.jjang051.board.dto.BoardDto;
 import com.jjang051.board.dto.CustomUserDetails;
-import com.jjang051.board.entity.Board;
-import com.jjang051.board.entity.Member;
+import com.jjang051.board.entity.*;
 import com.jjang051.board.repository.BoardRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,11 +15,50 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.jjang051.board.entity.QBoard.*;
+import static com.jjang051.board.entity.QComment.comment;
+import static com.jjang051.board.entity.QMember.member;
+
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final JPAQueryFactory queryFactory;
+
+    public List<Board> getQueryDslList() {
+        QMember writer = new QMember("writer");
+        QMember commentWriter = new QMember("commentWriter");
+        return queryFactory
+                .selectFrom(board)
+                .leftJoin(board.writer, writer)
+                .fetchJoin()
+                .leftJoin(board.comments, comment)
+                .fetchJoin()
+                .leftJoin(comment.writer, commentWriter)
+                .fetchJoin()
+                .fetch();
+    }
+
+    public Board getQuerydslBoard(Long id) {
+
+        QMember writer = new QMember("writer");
+        QMember commentWriter = new QMember("commentWriter");
+        return queryFactory
+                .selectFrom(board)
+                .leftJoin(board.writer, writer)
+                .fetchJoin()
+                .leftJoin(board.comments, comment)
+                .fetchJoin()
+                .leftJoin(comment.writer, commentWriter)
+                .fetchJoin()
+                .where(board.id.eq(id))
+                .fetchOne();
+    }
+
+
+
     public List<Board> getBoardList() {
         //return boardRepository.findAll();
         //return boardRepository.findByBoardFetch();

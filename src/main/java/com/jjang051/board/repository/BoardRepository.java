@@ -21,8 +21,11 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
             "left join fetch b.writer " +
             "left join fetch b.comments c " +
             "left join fetch c.writer")
+
     List<Board> findAllFetchBoard();
 
+
+    //querydsl
 
     @Query("select b from Board b " +
             "left join fetch b.writer " +
@@ -33,14 +36,5 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     Optional<Board> findByFetchMemberAndCommentId(@Param("id") Long id);
     //n + 1 문제 풀때 join fetch
 
-//    @Query(value=
-//            "select b from Board b where b.title like % :keyword % "
-//            )
-//    List<Comment> findBySubject(@Param("keyword") String keyword);
-//
-//    @Query(value=
-//            "select * from Board b where b.title like % :keyword % ",
-//            nativeQuery = true
-//    )
-//    List<Comment> findBySubject02(@Param("keyword") String keyword);
+
 }
