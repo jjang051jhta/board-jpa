@@ -120,8 +120,19 @@ public class BoardService {
                     .or(board.writer.userName.contains(keyword))
                     .or(board.content.contains(keyword));
         }
+        //최적화
+        //select 고정
+        //검색어 고정
+        QMember writer = new QMember("writer");
+        QMember commentWriter = new QMember("commentWriter");
         return queryFactory
                 .selectFrom(board)
+                .leftJoin(board.writer, writer)
+                .fetchJoin()
+                .leftJoin(board.comments, comment)
+                .fetchJoin()
+                .leftJoin(comment.writer, commentWriter)
+                .fetchJoin()
                 .where(booleanBuilder)
                 .fetch();
 
