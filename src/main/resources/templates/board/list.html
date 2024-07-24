@@ -54,6 +54,32 @@
             </div>
         </form>
     </div>
+<!--    <nav aria-label="Page navigation example my-5">-->
+<!--        <ul class="pagination">-->
+<!--            <li class="page-item" th:classappend="${!boardList.hasPrevious()} ? 'disabled'">-->
+<!--                <a class="page-link" href="#"-->
+<!--                   th:href="@{|/board/list?page=${boardList.number-1}|}">Previous</a>-->
+<!--            </li>-->
+<!--            &lt;!&ndash;th:if&ndash;&gt;-->
+<!--            &lt;!&ndash;  0~5  6~10  11~15  16~20  &ndash;&gt;-->
+<!--            <th:block th:each="page :-->
+<!--                                ${#numbers.sequence(0,boardList.totalPages - 1)}">-->
+<!--                <li class="page-item" th:classappend="${page==boardList.number}?'active'"-->
+<!--                    th:if="${page >= start && page < end}"-->
+<!--                >-->
+<!--                    <a class="page-link" href="#" th:text="${page+1}"-->
+<!--                       th:href="@{|/board/list?page=${page}|}">1</a>-->
+
+<!--                </li>-->
+<!--            </th:block>-->
+<!--            &lt;!&ndash;      <li class="page-item"><a class="page-link" href="#">2</a></li>&ndash;&gt;-->
+<!--            &lt;!&ndash;      <li class="page-item"><a class="page-link" href="#">3</a></li>&ndash;&gt;-->
+<!--            <li class="page-item" th:classappend="${!boardList.hasNext()} ? 'disabled'">-->
+<!--                <a class="page-link" href="#"-->
+<!--                   th:href="@{|/board/list?page=${boardList.number+1}|}">Next</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
     <div class="mt-5"><a href="" th:href="@{/board/write}" class="btn btn-primary">WRITE</a></div>
 </div>
 <script th:replace="~{fragment/footer}"></script>

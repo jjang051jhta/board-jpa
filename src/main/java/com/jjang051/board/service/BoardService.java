@@ -5,9 +5,13 @@ import com.jjang051.board.dto.CustomUserDetails;
 import com.jjang051.board.entity.*;
 import com.jjang051.board.repository.BoardRepository;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Visitor;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,10 +33,17 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final JPAQueryFactory queryFactory;
 
+    @Value("${pagination.size}")  // "3"
+
+    private int size;
     public List<Board> getQueryDslList() {
+
+
+
         QMember writer = new QMember("writer");
         QMember commentWriter = new QMember("commentWriter");
-        return queryFactory
+        List<Board> boardList =
+                queryFactory
                 .selectFrom(board)
                 .leftJoin(board.writer, writer)
                 .fetchJoin()
@@ -41,6 +52,8 @@ public class BoardService {
                 .leftJoin(comment.writer, commentWriter)
                 .fetchJoin()
                 .fetch();
+
+        return boardList;
     }
 
     public Board getQuerydslBoard(Long id) {
@@ -103,7 +116,8 @@ public class BoardService {
       boardRepository.save(BoardDto.toEntity(findBoardDto));
     }
 
-    public List<Board> getSearchResultList(String keyword,String category) {
+    public Page<Board> getSearchResultList(String keyword, String category, int page) {
+
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         if(category.equals("title")) {
             booleanBuilder.or(board.title.contains(keyword));
@@ -125,7 +139,12 @@ public class BoardService {
         //검색어 고정
         QMember writer = new QMember("writer");
         QMember commentWriter = new QMember("commentWriter");
-        return queryFactory
+        // lazy  상태의 연관관계 오브젝트들을 한번에 불러와라(처음 부를떄  쿼리나가는 걸 막기위해
+        // 프록시객체(가짜)를 만들어서 가지고 있음 writer의 속성 또는 메서드 호출할때 이때 쿼리가 나간다.)
+        // eager (즉시로딩 관련된 쿼리가 나가게 된다.  board writer)  성능저하
+        Pageable pageable = PageRequest.of(page,page+size);
+        List<Board> boardList =
+                queryFactory
                 .selectFrom(board)
                 .leftJoin(board.writer, writer)
                 .fetchJoin()
@@ -134,7 +153,20 @@ public class BoardService {
                 .leftJoin(comment.writer, commentWriter)
                 .fetchJoin()
                 .where(booleanBuilder)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
+        Long total =
+                queryFactory
+                .select(board.count())
+                .from(board)
+                .fetchOne();
+        //querydsl 리컨타입에 Page<> 없다
+        // PageImpl을 통해서 값을 전달하면 된다.
+        return new PageImpl<>(boardList,pageable,total);
+        //return boardList;
     }
+
+
 }

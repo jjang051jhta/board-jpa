@@ -39,7 +39,8 @@ spring:
           #글로벌 서비스를 하는곳은 여기에만 등록하면 된다.
 
 
-
+pagination:
+  size: 3
 
 file:
   path: C:/upload/

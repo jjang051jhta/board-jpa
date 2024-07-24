@@ -7,6 +7,7 @@ import com.jjang051.board.repository.BoardRepository;
 import com.jjang051.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
+
     @GetMapping("/write")
     public String insert() {
         return "board/write";
@@ -30,7 +32,7 @@ public class BoardController {
 
     @PostMapping("/write")
     public String insert(@ModelAttribute BoardDto boardDto,
-                         @AuthenticationPrincipal CustomUserDetails customUserDetails)    {
+                         @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         boardDto.setRegDate(LocalDateTime.now());
         boardDto.setWriter(customUserDetails.getLoggedMember());
         boardService.insertBoard(boardDto);
@@ -42,7 +44,7 @@ public class BoardController {
         //List<Board> boardList = boardService.getBoardList();
         List<Board> boardList = boardService.getQueryDslList();
         //dto로 바꿔서 나가야함... entity를 직접 내보내는건 좋지 않다.  dto
-        model.addAttribute("boardList",boardList);
+        model.addAttribute("boardList", boardList);
         //service 파트로 옮기기
         // board를 dto변경
         // 화면 출력
@@ -53,7 +55,7 @@ public class BoardController {
     public String list(Model model, @PathVariable("id") Long id) {
         //Board board = boardService.getBoard(id);
         Board board = boardService.getQuerydslBoard(id);
-        model.addAttribute("board",board);
+        model.addAttribute("board", board);
         //view에다가 렌더링 하시고 답글 넣기 해보기
         return "board/view";
     }
@@ -64,7 +66,7 @@ public class BoardController {
     public String delete(@PathVariable("id") Long id) {
         boardService.delete(id);
         //delete 를 하면 된다.
-        log.info("id==={}",id);
+        log.info("id==={}", id);
         //return id+"==="+id;
         return "redirect:/board/list";
     }
@@ -74,15 +76,15 @@ public class BoardController {
     public String deleteId(@PathVariable("id") Long id) {
         boardService.deleteId(id);
         //delete 를 하면 된다.
-        log.info("id==={}",id);
+        log.info("id==={}", id);
         //return id+"==="+id;
         return "redirect:/board/list";
     }
 
     @GetMapping("/modify/{id}")
-    public String modify(@PathVariable("id") Long id,Model model) {
+    public String modify(@PathVariable("id") Long id, Model model) {
         Board board = boardService.getBoard(id);
-        model.addAttribute("board",board);
+        model.addAttribute("board", board);
         return "board/modify";
     }
 
@@ -90,25 +92,28 @@ public class BoardController {
     public String modifyProcess(@PathVariable("id") Long id,
                                 @ModelAttribute BoardDto boardDto,
                                 @AuthenticationPrincipal
-                                    CustomUserDetails customUserDetails
-                                ) {
+                                CustomUserDetails customUserDetails
+    ) {
         //같으면 업데이트를 한다.
         //같은 객체를 내용만 바꿔서 save 하면   dirty checking
-        log.info("===={}",boardDto.getId());
+        log.info("===={}", boardDto.getId());
         boardDto.setRegDate(LocalDateTime.now());
         boardDto.setWriter(customUserDetails.getLoggedMember());
-        boardService.modify(boardDto,id);
-        return "redirect:/board/modify/"+id;
+        boardService.modify(boardDto, id);
+        return "redirect:/board/modify/" + id;
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam String keyword,
-                         @RequestParam String category,
+    public String search(@RequestParam(value = "keyword", required = false) String keyword,
+                         @RequestParam(value = "category", required = false) String category,
+                         @RequestParam(value = "page", defaultValue = "0") int page,
                          Model model) {
-        log.info("keyword==={}",keyword);
-        List<Board> boardList =
-                boardService.getSearchResultList(keyword,category);
-        model.addAttribute("boardList",boardList);
+        Page<Board> boardList =
+                boardService.getSearchResultList(keyword, category,0);
+        //model.addAttribute("boardList",boardList);
+        model.addAttribute("boardList", boardList.getContent());
+        //List<Board>
+
         return "board/list";
     }
 }
