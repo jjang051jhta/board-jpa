@@ -7,6 +7,7 @@ import com.jjang051.board.repository.BoardRepository;
 import com.jjang051.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/board")
 public class BoardController {
+    @Value("${pagination.size}")
+    int size;
+
     private final BoardService boardService;
 
     @GetMapping("/write")
@@ -109,11 +113,18 @@ public class BoardController {
                          @RequestParam(value = "page", defaultValue = "0") int page,
                          Model model) {
         Page<Board> boardList =
-                boardService.getSearchResultList(keyword, category,0);
+                boardService.getSearchResultList(keyword, category,page);
         //model.addAttribute("boardList",boardList);
+        int start = (int)Math.floor(page/size)*size;
+        int end = start+size;
         model.addAttribute("boardList", boardList.getContent());
+        model.addAttribute("pagination", boardList);
+        model.addAttribute("start",start);
+        model.addAttribute("end",end);
+
+
         //List<Board>
 
-        return "board/list";
+        return "board/search-list";
     }
 }

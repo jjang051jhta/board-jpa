@@ -34,7 +34,6 @@ public class BoardService {
     private final JPAQueryFactory queryFactory;
 
     @Value("${pagination.size}")  // "3"
-
     private int size;
     public List<Board> getQueryDslList() {
 
@@ -142,7 +141,7 @@ public class BoardService {
         // lazy  상태의 연관관계 오브젝트들을 한번에 불러와라(처음 부를떄  쿼리나가는 걸 막기위해
         // 프록시객체(가짜)를 만들어서 가지고 있음 writer의 속성 또는 메서드 호출할때 이때 쿼리가 나간다.)
         // eager (즉시로딩 관련된 쿼리가 나가게 된다.  board writer)  성능저하
-        Pageable pageable = PageRequest.of(page,page+size);
+        Pageable pageable = PageRequest.of(page,size);
         List<Board> boardList =
                 queryFactory
                 .selectFrom(board)
