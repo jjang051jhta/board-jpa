@@ -42,7 +42,10 @@
             </li>
             <th:block th:each="page : ${#numbers.sequence(0,pagination.totalPages - 1)}">
                 <li class="page-item" th:if="${page>=start && page < end}">
-                    <a class="page-link" href="#" th:text="${page+1}">1</a>
+                    <a class="page-link"
+                       th:href=
+"@{/board/search(category=${param.category},keyword=${param.keyword},page=${page})}"
+th:text="${page+1}">1</a>
                 </li>
             </th:block>
 
